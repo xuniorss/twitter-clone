@@ -1,9 +1,13 @@
+'use client'
+
 import { IconType } from 'react-icons'
+import { BiLogOut } from 'react-icons/bi'
 import { BsBellFill, BsHouseFill } from 'react-icons/bs'
 import { FaUser } from 'react-icons/fa'
 import { SidebarItem } from './components/SidebarItem'
-import { BiLogOut } from 'react-icons/bi'
 
+import useCurrentUser from '@/hooks/useCurrentUser'
+import { signOut } from 'next-auth/react'
 import { SidebarLogo } from './components/SidebarLogo'
 import { SidebarTweetButton } from './components/SidebarTweetButton'
 
@@ -11,15 +15,23 @@ type SidebarItems = {
    label: string
    href: string
    icon: IconType
+   auth: boolean
 }
 
 const items: Array<SidebarItems> = [
-   { label: 'Página inicial', href: '/', icon: BsHouseFill },
-   { label: 'Notificações', href: '/notifications', icon: BsBellFill },
-   { label: 'Perfil', href: '/users/123', icon: FaUser },
+   { label: 'Página inicial', href: '/', icon: BsHouseFill, auth: false },
+   {
+      label: 'Notificações',
+      href: '/notifications',
+      icon: BsBellFill,
+      auth: true,
+   },
+   { label: 'Perfil', href: '/users/123', icon: FaUser, auth: true },
 ]
 
 export const Sidebar = () => {
+   const { data: currentUser } = useCurrentUser()
+
    return (
       <div className="col-span-1 h-full pr-4 md:pr-6">
          <div className="flex flex-col items-end">
@@ -31,9 +43,16 @@ export const Sidebar = () => {
                      href={item.href}
                      label={item.label}
                      icon={item.icon}
+                     auth={item.auth}
                   />
                ))}
-               <SidebarItem onClick={() => {}} icon={BiLogOut} label="Sair" />
+               {currentUser && (
+                  <SidebarItem
+                     onClick={() => signOut()}
+                     icon={BiLogOut}
+                     label="Sair"
+                  />
+               )}
                <SidebarTweetButton />
             </div>
          </div>

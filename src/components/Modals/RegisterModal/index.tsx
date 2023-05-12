@@ -4,7 +4,9 @@ import { Input } from '@/components/Input'
 import { Modal } from '@/components/Modal'
 import useLoginModal from '@/hooks/useLoginModal'
 import useRegisterModal from '@/hooks/useRegisterModal'
+import { signIn } from 'next-auth/react'
 import { useCallback, useState } from 'react'
+import { toast } from 'react-hot-toast'
 
 export const RegisterModal = () => {
    const loginModal = useLoginModal()
@@ -27,13 +29,30 @@ export const RegisterModal = () => {
       try {
          setIsLoading(true)
 
-         registerModal.onClose()
+         const response = await fetch('/api/register', {
+            method: 'POST',
+            body: JSON.stringify({
+               email,
+               username,
+               name,
+               password,
+            }),
+         })
+
+         if (response.ok) {
+            toast.success('Conta criada.')
+
+            signIn('credentials', { email, password })
+
+            registerModal.onClose()
+         }
       } catch (error) {
          console.error(error)
+         toast.error('Alguma coisa está errada.')
       } finally {
          setIsLoading(false)
       }
-   }, [registerModal])
+   }, [email, name, password, registerModal, username])
 
    const bodyContent = (
       <div className="flex flex-col gap-4">
