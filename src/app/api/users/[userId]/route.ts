@@ -1,9 +1,11 @@
-import { NextApiRequest, NextApiResponse } from 'next'
 import prisma from '@/libs/prismadb'
 
-export const GET = async (req: NextApiRequest, res: NextApiResponse) => {
+export const GET = async (
+   req: Request,
+   { params }: { params: { userId: string } }
+) => {
    try {
-      const { userId } = req.query
+      const { userId } = params
 
       if (!userId || typeof userId !== 'string') {
          throw new Error('Invalid ID')
