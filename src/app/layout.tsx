@@ -1,9 +1,11 @@
 import { Layout } from '@/components/Layout'
+import { EditModal } from '@/components/Modals/EditModal'
 import { LoginModal } from '@/components/Modals/LoginModal'
 import { RegisterModal } from '@/components/Modals/RegisterModal'
 import { Provider } from '@/components/Providers'
 import { Roboto } from 'next/font/google'
 import { ReactNode } from 'react'
+import { Toaster } from 'react-hot-toast'
 
 import './globals.css'
 
@@ -23,6 +25,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <html lang="pt-br">
          <body className={roboto.className}>
             <Provider>
+               <Toaster />
+               <EditModal />
                <LoginModal />
                <RegisterModal />
                <Layout>{children}</Layout>
