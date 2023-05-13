@@ -19,7 +19,7 @@ export const UserBio = ({ userId }: UserBioProps) => {
       if (!fetchedUser?.createdAt) return null
 
       return format(new Date(fetchedUser.createdAt), 'MMMM yyyy')
-   }, [fetchedUser.createdAt])
+   }, [fetchedUser?.createdAt])
 
    return (
       <div className="border-b-[1px] border-neutral-800 pb-4">
