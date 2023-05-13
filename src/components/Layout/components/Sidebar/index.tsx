@@ -18,19 +18,24 @@ type SidebarItems = {
    auth: boolean
 }
 
-const items: Array<SidebarItems> = [
-   { label: 'Página inicial', href: '/', icon: BsHouseFill, auth: false },
-   {
-      label: 'Notificações',
-      href: '/notifications',
-      icon: BsBellFill,
-      auth: true,
-   },
-   { label: 'Perfil', href: '/users/123', icon: FaUser, auth: true },
-]
-
 export const Sidebar = () => {
    const { data: currentUser } = useCurrentUser()
+
+   const items: Array<SidebarItems> = [
+      { label: 'Página inicial', href: '/', icon: BsHouseFill, auth: false },
+      {
+         label: 'Notificações',
+         href: '/notifications',
+         icon: BsBellFill,
+         auth: true,
+      },
+      {
+         label: 'Perfil',
+         href: `/users/${currentUser?.id}`,
+         icon: FaUser,
+         auth: true,
+      },
+   ]
 
    return (
       <div className="col-span-1 h-full pr-4 md:pr-6">

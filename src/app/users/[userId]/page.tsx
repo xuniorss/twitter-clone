@@ -1,6 +1,7 @@
 'use client'
 
 import { Header } from '@/components/Header'
+import { PostFeed } from '@/components/posts/PostFeed'
 import { UserBio } from '@/components/Users/UserBio'
 import { UserHero } from '@/components/Users/UserHero'
 import useUser from '@/hooks/useUser'
@@ -29,6 +30,7 @@ export default function UserView() {
          <Header showBackArrow label={fetchedUser?.name} />
          <UserHero userId={params.userId} />
          <UserBio userId={params.userId} />
+         <PostFeed userId={params.userId} />
       </>
    )
 }
