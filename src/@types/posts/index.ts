@@ -7,6 +7,8 @@ export type CommentsProps = {
    updatedAt: Date
    userId: string
    postId: string
+
+   user: UserProps
 }
 
 export type PostsProps = {

@@ -2,6 +2,7 @@
 
 import useCurrentUser from '@/hooks/useCurrentUser'
 import useLoginModal from '@/hooks/useLoginModal'
+import usePost from '@/hooks/usePost'
 import usePosts from '@/hooks/usePosts'
 import useRegisterModal from '@/hooks/useRegisterModal'
 import { useCallback, useState } from 'react'
@@ -24,12 +25,15 @@ export const Form = ({ placeholder, isComment, postId }: FormProps) => {
 
    const { data: currentUser } = useCurrentUser()
    const { mutate: mutatePosts } = usePosts()
+   const { mutate: mutatePost } = usePost(String(postId))
 
    const onSubmit = useCallback(async () => {
       try {
          setIsLoading(true)
 
-         const response = await fetch('/api/posts', {
+         const url = isComment ? `/api/comments?postId=${postId}` : '/api/posts'
+
+         const response = await fetch(url, {
             method: 'POST',
             body: JSON.stringify({ body }),
          })
@@ -39,6 +43,7 @@ export const Form = ({ placeholder, isComment, postId }: FormProps) => {
 
             setBody('')
             mutatePosts()
+            mutatePost()
          }
       } catch (error) {
          console.error(error)
@@ -46,7 +51,7 @@ export const Form = ({ placeholder, isComment, postId }: FormProps) => {
       } finally {
          setIsLoading(false)
       }
-   }, [body, mutatePosts])
+   }, [body, isComment, mutatePosts, postId, mutatePost])
 
    return (
       <div className="border-b-[1px] border-neutral-800 px-5 py-2">

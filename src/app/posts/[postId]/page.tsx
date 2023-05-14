@@ -2,6 +2,7 @@
 
 import { Form } from '@/components/Form'
 import { Header } from '@/components/Header'
+import { CommentFeed } from '@/components/posts/CommentFeed'
 import { PostItem } from '@/components/posts/PostFeed/components/PostItem'
 import usePost from '@/hooks/usePost'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
@@ -26,6 +27,7 @@ export default function PostView() {
          <Header label="Tweet" showBackArrow />
          <PostItem data={fetchedPost} />
          <Form postId={postId} isComment placeholder="Tweet sua resposta" />
+         <CommentFeed comments={fetchedPost?.comments} />
       </>
    )
 }
