@@ -16,24 +16,33 @@ type SidebarItems = {
    href: string
    icon: IconType
    auth: boolean
+   alert: boolean
 }
 
 export const Sidebar = () => {
    const { data: currentUser } = useCurrentUser()
 
    const items: Array<SidebarItems> = [
-      { label: 'Página inicial', href: '/', icon: BsHouseFill, auth: false },
+      {
+         label: 'Página inicial',
+         href: '/',
+         icon: BsHouseFill,
+         auth: false,
+         alert: false,
+      },
       {
          label: 'Notificações',
          href: '/notifications',
          icon: BsBellFill,
          auth: true,
+         alert: Boolean(currentUser?.hasNotification),
       },
       {
          label: 'Perfil',
          href: `/users/${currentUser?.id}`,
          icon: FaUser,
          auth: true,
+         alert: false,
       },
    ]
 
@@ -49,6 +58,7 @@ export const Sidebar = () => {
                      label={item.label}
                      icon={item.icon}
                      auth={item.auth}
+                     alert={item.alert}
                   />
                ))}
                {currentUser && (

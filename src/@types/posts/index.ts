@@ -11,6 +11,15 @@ export type CommentsProps = {
    user: UserProps
 }
 
+export type NotificationsProps = {
+   id: string
+   body: string
+   userId: string
+   createdAt: Date
+
+   user: UserProps
+}
+
 export type PostsProps = {
    id: string
    body: string
