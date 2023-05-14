@@ -1,5 +1,3 @@
-import { NextApiRequest } from 'next'
-import { UserProps } from '@/@types/user'
 import { useCallback, useMemo } from 'react'
 import toast from 'react-hot-toast'
 import useCurrentUser from '../useCurrentUser'
